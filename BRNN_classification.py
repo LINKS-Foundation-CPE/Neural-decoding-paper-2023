@@ -27,15 +27,6 @@ if __name__== "__main__":
 
     args = parser.parse_args()
     data_prefix = '_'.join(os.path.normpath(args.dataset).split(os.sep)[-2:])
-
-    print('\n')
-    print('----------------')
-    print('Building windows')
-    print(data_prefix)
-    print('----------------')
-    print('\n')
-    print('Loading data...')
-
     
     trainset_multi_path = os.path.join(args.dataset, 'multi_trainset.npz')
     valset_multi_path = os.path.join(args.dataset, 'multi_valset.npz')
