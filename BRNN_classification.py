@@ -1,25 +1,19 @@
-import seaborn as sns
-import matplotlib.pyplot as plt
 import tensorflow.keras as keras
 import tensorflow as tf
-import math 
-from sklearn.preprocessing import MaxAbsScaler
-from keras import Sequential,optimizers
-from keras.layers import Dense,LSTM,Dropout,TimeDistributed,Bidirectional,Normalization
-from sklearn.metrics import confusion_matrix, classification_report
+from keras import Sequential
+from keras.layers import Dense,LSTM,Bidirectional
+from sklearn.metrics import classification_report
 import os
 import numpy as np
-import logging
 import argparse
-from utils import *
+from plotting_utils import *
 
 def load_data(filepath):
-    # load existing data
+    '''
+    Load pre-processed data
+    '''
     windows_dataset = np.load(filepath)
     X = windows_dataset['X']
-    # X = X.reshape(-1, X[0].shape[0], X[0].shape[1], 1)
-    # resize with 3 channels, but it is still a problem the input dimension
-    # X = np.repeat(X, 3, axis=3)
     y = windows_dataset['y']
     return X, y
 
@@ -34,13 +28,13 @@ if __name__== "__main__":
     args = parser.parse_args()
     data_prefix = '_'.join(os.path.normpath(args.dataset).split(os.sep)[-2:])
 
-    logging.info('\n')
-    logging.info('----------------')
-    logging.info('Building windows')
-    logging.info(data_prefix)
-    logging.info('----------------')
-    logging.info('\n')
-    logging.info('Loading data...')
+    print('\n')
+    print('----------------')
+    print('Building windows')
+    print(data_prefix)
+    print('----------------')
+    print('\n')
+    print('Loading data...')
 
     
     trainset_multi_path = os.path.join(args.dataset, 'multi_trainset.npz')
@@ -80,15 +74,6 @@ if __name__== "__main__":
     label_multi_test = label_multi_test.argmax(axis=1)
     
     #confusion matrix
-    
-#     cm2 = confusion_matrix(label_multi_test,predicted_multi_value)
-    
-#     fig, ax = plt.subplots(figsize=(16,14))
-#     sns.heatmap(cm2, annot=cm2, cmap='Blues')
-#     plt.xlabel('Predicted')
-#     plt.ylabel('True')
-#     plt.savefig('all_classes_matrix_BRNN.png')
-#     plt.close()
     print('All classes report')
     print(classification_report(label_multi_test, predicted_multi_value))
 

@@ -1,51 +1,32 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
 import tensorflow.keras as keras
-import math 
-from sklearn.preprocessing import MinMaxScaler
 import tensorflow as tf
-from keras import Sequential,optimizers
-from keras.layers import Dense,LSTM,Dropout,TimeDistributed,Bidirectional
+from keras import Sequential
+from keras.layers import Dense,LSTM,Bidirectional
 from sklearn.metrics import confusion_matrix, classification_report
 import os
 import numpy as np
-import logging
 import argparse
 
 def load_data(filepath):
-    # load existing data
+    '''
+    Load pre-processed data
+    '''
     windows_dataset = np.load(filepath)
     X = windows_dataset['X']
-    # X = X.reshape(-1, X[0].shape[0], X[0].shape[1], 1)
-    # resize with 3 channels, but it is still a problem the input dimension
-    # X = np.repeat(X, 3, axis=3)
     y = windows_dataset['y']
     return X, y
-
-def lr_scheduler(epoch, lr):
-    if epoch == 5:
-        return lr/10.
-    else:
-        return lr
 
 if __name__== "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-d", "--dataset", help="Name of dataset from previous step, without extension", default='data/ZRec50_Mini_40_binned_spiketrains',
                         type=str)
-    parser.add_argument("-m", "--model", help="Keras trained model", default='',
+    parser.add_argument("-m", "--model", help="Keras pre-trained model for validation only", default='',
                         type=str)
 
     args = parser.parse_args()
     data_prefix = '_'.join(os.path.normpath(args.dataset).split(os.sep)[-2:])
-
-    logging.info('\n')
-    logging.info('----------------')
-    logging.info('Building windows')
-    logging.info(data_prefix)
-    logging.info('----------------')
-    logging.info('\n')
-    logging.info('Loading data...')
-    
     
     trainset_bin_path = os.path.join(args.dataset, 'binary_trainset.npz')
     valset_bin_path = os.path.join(args.dataset, 'binary_valset.npz')
