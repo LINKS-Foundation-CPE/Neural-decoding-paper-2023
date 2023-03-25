@@ -9,6 +9,11 @@ import logging
 
 
 def from_matlab_to_numpy_data(filename, bin_size, out_prefix, outdir, not_only_correct=False):
+    '''
+    Extract spike trains for each trial from matlab file
+    Record bin number associated to each experiment event (e.g. "hold")
+    save everything to disk for next step
+    '''
     if not os.path.exists(os.path.join(outdir,out_prefix+'binned_spiketrains')):
         os.makedirs(os.path.join(outdir,out_prefix+'binned_spiketrains'))
     neodata = NeoMatlabIO(filename)
@@ -52,7 +57,7 @@ def from_matlab_to_numpy_data(filename, bin_size, out_prefix, outdir, not_only_c
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("-d", "--dataset", help=".mat file containing brain recordings", default='data/MRec40.neo.mat',
+    parser.add_argument("-d", "--dataset", help=".mat file containing brain recordings", default='MRec40.neo.mat',
                         type=str)
     parser.add_argument("-o", "--outdir", help="destination directory for dataset", default='data',
                         type=str)
