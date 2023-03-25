@@ -72,6 +72,11 @@ def prepare_detection_dataset(dirpath,df,lookback, lookahead):
     return data_set_bin, label_bin, label, y_label
 
 def prepare_classification_dataset(dirpath,df,lookback, lookahead):
+    '''
+    Prepare dataset for grasped object classification task
+    Extract sub-sequences with a sliding window from trials, only when the last bin falls in the Hold phase
+    Associate to each sequence the object id mapped to a one-hot array
+    '''
     X = []
     y = []
 
@@ -113,6 +118,7 @@ if __name__ == "__main__":
                         type=str)
     parser.add_argument("--lookback", help="length of the sequence to be classified", default=12,
                         type=int)
+    # No lookahead used for this wprk
     parser.add_argument("--lookahead", help="length of the sequence to be classified", default=0,
                         type=int)
 
@@ -144,17 +150,20 @@ if __name__ == "__main__":
         print('Removed object: ' + str(obj_r))
         binned_samples_df = binned_samples_df[binned_samples_df.obj_id!=obj_r]
     
+    # Train/test spolit must be performed at trials level
+    # Test size if 0.2 of all trials
     train_val_df, test_df = train_test_split(binned_samples_df, test_size=0.2, random_state=42, stratify=binned_samples_df.obj_id)
+    # validation size is 0.2 of train trials
     train_df, val_df = train_test_split(train_val_df, test_size=0.2, random_state=42, stratify=train_val_df.obj_id)    
     
-    print('Binary train')
+    print('Binary training set')
     X_train_bin, y_train_bin, y_train_full, obj_id_full = prepare_detection_dataset(args.dataset, train_df, args.lookback, args.lookahead)
     print('Binary validation')
     X_val_bin, y_val_bin, y_val_full, obj_id_val_full = prepare_detection_dataset(args.dataset, val_df, args.lookback, args.lookahead)
     print('Binary test')
     X_test_bin, y_test_bin, y_test_full, obj_id_test_full = prepare_detection_dataset(args.dataset, test_df, args.lookback, args.lookahead)
 
-    print('Multiclass train')
+    print('Multiclass training set')
     X_train_multi, y_train_multi, obj_id = prepare_classification_dataset(args.dataset, train_df, args.lookback, args.lookahead)
     print('Multiclass validation')
     X_val_multi, y_val_multi, obj_id_val = prepare_classification_dataset(args.dataset, val_df, args.lookback, args.lookahead)
