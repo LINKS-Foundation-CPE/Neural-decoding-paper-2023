@@ -20,7 +20,7 @@ def from_matlab_to_numpy_data(filename, bin_size, out_prefix, outdir, not_only_c
     for i in range(num_trials):
         # segment of the considered sample
         seg = blk.segments[i]
-        # save only correct grasps and the non problematic ones (identifier of the object less than 85)
+        # save only correct grasps and the non problematic ones (also exclude identifier of the object greater than 85)
         object_id = seg.annotations['obj']
         if (seg.annotations['correct'] == 1 or not_only_correct) and object_id < 85:
             # list of the events and the corresponding timing
