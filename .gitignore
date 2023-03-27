@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+*mat
+pre_processed/
+training_ready/
+MRec40*
+.DS_Store
