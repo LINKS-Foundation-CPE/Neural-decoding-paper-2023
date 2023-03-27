@@ -4,11 +4,10 @@ import matplotlib.pyplot as plt
 from sklearn.preprocessing import normalize
 import matplotlib
 import seaborn as sns
-def clean_logs(log_path, keep=5):
-    logs = os.listdir(log_path)
-    while len(logs) > keep:
-        os.remove(log_path + '/' + logs[0])
-        logs.pop(0)
+try:
+    from collections.abc import Iterable
+except ImportError:
+    from collections import Iterable
 
 
 def f_unpack_dict(dct):
@@ -53,7 +52,6 @@ def progressbar(it, prefix="", size=60, file=None):
 
 
 def my_confusion_matrix(predictions, true_values, labels=None, return_labels=False):#, label_encoder, grouped_category=True, title=None, new_order=None):
-    from collections import Iterable
     """
         Evaluate a confusion matrix given a single or multiple predictions and their respective true values
 
