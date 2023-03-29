@@ -22,7 +22,7 @@ This step trains a binary classification model for the grasping phase detection.
 
     python BRNN_onset.py -d ./training_ready/MRec40_40_binned_spiketrains/lookback_12_lookahead_0/
 
-### Step 3.2 -  trainibng of grasp classificator
+### Step 3.2 -  training of grasp classificator
 
 This step trains a multi-class classification model for the grasped object detection.
 
