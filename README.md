@@ -16,9 +16,9 @@ This step splits the trials in training, validation and test set, then create se
 
     RNN_sequence_split_data.py -d pre_processed/MRec40_40_binned_spiketrains -o ./training_ready --lookback 12
 
-### Step 3.1 - training of movement onset detector
+### Step 3.1 - training of grasping phase detector
 
-This step trains a binary classification model for the movement onset detection.
+This step trains a binary classification model for the grasping phase detection.
 
     python BRNN_onset.py -d ./training_ready/MRec40_40_binned_spiketrains/lookback_12_lookahead_0/
 
