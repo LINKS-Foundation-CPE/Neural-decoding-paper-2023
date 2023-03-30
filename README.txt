@@ -4,6 +4,15 @@ To execute the pipeline, the original recordin session data (MRec40.neo.mat) mus
 
 Use `run.sh` to execute all the steps at once.
 
+### Dependencies
+- Tensorflow
+- Scikit-learn
+- Pandas
+- [Neo](http://neuralensemble.org/neo/)
+- [Elephant](http://neuralensemble.org/elephant/)
+- Matplotlib
+- Seaborn
+
 ### Step 1 - time discretization and trial-metadata association
 
 This step extract the trials from the entire dataset, applies time discretisation and and associates each trial with metadata (experiment phases timestamp, object id).
@@ -16,13 +25,13 @@ This step splits the trials in training, validation and test set, then create se
 
     RNN_sequence_split_data.py -d pre_processed/MRec40_40_binned_spiketrains -o ./training_ready --lookback 12
 
-### Step 3.1 - training of movement onset detector
+### Step 3.1 - training of grasping phase detector
 
-This step trains a binary classification model for the movement onset detection.
+This step trains a binary classification model for the grasping phase detection.
 
     python BRNN_onset.py -d ./training_ready/MRec40_40_binned_spiketrains/lookback_12_lookahead_0/
 
-### Step 3.2 -  trainibng of grasp classificator
+### Step 3.2 -  training of grasp classificator
 
 This step trains a multi-class classification model for the grasped object detection.
 

@@ -4,6 +4,15 @@ To execute the pipeline, the original recordin session data (MRec40.neo.mat) mus
 
 Use `run.sh` to execute all the steps at once.
 
+### Dependencies
+- Tensorflow
+- Scikit-learn
+- Pandas
+- [Neo](http://neuralensemble.org/neo/)
+- [Elephant](http://neuralensemble.org/elephant/)
+- Matplotlib
+- Seaborn
+
 ### Step 1 - time discretization and trial-metadata association
 
 This step extract the trials from the entire dataset, applies time discretisation and and associates each trial with metadata (experiment phases timestamp, object id).
